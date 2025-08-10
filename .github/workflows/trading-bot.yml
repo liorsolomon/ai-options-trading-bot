@@ -54,7 +54,7 @@ jobs:
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: |
-        python scripts/init_database.py
+        python ai-options-trading-bot/scripts/init_database.py
     
     - name: Run trading bot
       env:
@@ -68,7 +68,7 @@ jobs:
         TRADING_MODE: paper
         GITHUB_ACTIONS: true
       run: |
-        python -m src.main
+        cd ai-options-trading-bot && python -m src.main
     
     - name: Upload logs
       if: always()
