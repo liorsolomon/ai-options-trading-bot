@@ -2,6 +2,11 @@
 
 An automated options trading bot powered by Claude Code, running on GitHub Actions with paper trading via Alpaca Markets.
 
+## 📊 System Architecture
+
+- **[View System Diagrams](ai-options-trading-bot/docs/SYSTEM_ARCHITECTURE.md)** - Complete technical architecture with flowcharts
+- **[Simple Overview](ai-options-trading-bot/README_ARCHITECTURE.md)** - Quick visual guide to how it works
+
 ## Features
 
 - **AI-Driven Decisions**: Uses Claude Code for market analysis and trading decisions
@@ -37,6 +42,25 @@ Required GitHub Secrets:
 - `DATABASE_URL`: PostgreSQL connection string
 - `NEWS_API_KEY`: NewsAPI key (optional)
 
+## Quick Start
+
+### 🎮 Testing Modes
+
+1. **Simulation Mode** - Test strategies anytime without market connection
+   ```bash
+   python scripts/quick_sim_test.py
+   ```
+
+2. **Paper Trading** - Test with real market data and virtual money
+   ```bash
+   python scripts/test_trading_simple.py
+   ```
+
+3. **Hypothesis Testing** - Validate trading strategies systematically
+   ```bash
+   python scripts/run_hypothesis_tests.py
+   ```
+
 ## Project Structure
 
 ```
@@ -48,10 +72,12 @@ ai-options-trading-bot/
 │   ├── strategies/
 │   ├── signals/
 │   ├── execution/
-│   └── database/
+│   ├── database/
+│   └── simulation/      # Testing simulator
 ├── config/              # Configuration files
 ├── scripts/             # Utility scripts
 ├── tests/              # Test suite
+├── docs/                # Documentation & diagrams
 └── docker/             # Container configuration
 ```
 
@@ -78,6 +104,23 @@ python scripts/analyze_performance.py
 - Maximum daily loss protection
 - Diversification requirements
 - Automated stop-loss mechanisms
+
+## 📚 Documentation
+
+- **[System Architecture](ai-options-trading-bot/docs/SYSTEM_ARCHITECTURE.md)** - Complete technical diagrams
+- **[Setup Guide](ai-options-trading-bot/docs/SETUP_GUIDE.md)** - Detailed setup instructions
+- **[Cloud Database Setup](ai-options-trading-bot/docs/CLOUD_DATABASE_SETUP.md)** - Supabase/Neon configuration
+- **[Simple Overview](ai-options-trading-bot/README_ARCHITECTURE.md)** - Visual system overview
+
+## 🚀 Current Status
+
+- ✅ Alpaca integration complete
+- ✅ Supabase database connected
+- ✅ GitHub Actions configured
+- ✅ Simulation environment ready
+- ✅ Hypothesis testing framework
+- 🔄 Strategy development in progress
+- 📅 Paper trading active
 
 ## License
 
