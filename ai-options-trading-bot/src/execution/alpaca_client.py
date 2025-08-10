@@ -11,9 +11,7 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import (
     MarketOrderRequest,
     LimitOrderRequest,
-    GetOrdersRequest,
-    GetPositionsRequest,
-    ClosePositionRequest
+    GetOrdersRequest
 )
 from alpaca.trading.enums import (
     OrderSide,
