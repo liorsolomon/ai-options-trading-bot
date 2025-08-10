@@ -1,0 +1,63 @@
+# WhatsApp Group Configuration
+# Keep this file in .gitignore to protect privacy
+
+whatsapp:
+  # Group settings (customize for your group)
+  group_name: "Your Investment Group"  # For display only
+  group_language: "en"  # Primary language: en, he, es, etc.
+  
+  # Analysis settings
+  analysis:
+    default_lookback_hours: 168  # 1 week
+    min_confidence_threshold: 0.7
+    max_signals_to_display: 5
+    
+  # Privacy settings
+  privacy:
+    anonymize_senders: true
+    hash_length: 8  # Length of anonymized sender ID
+    store_raw_messages: false  # Only store processed signals
+    
+  # Custom term mappings (add your group's specific terms)
+  custom_mappings:
+    # Example Hebrew mappings - customize for your group
+    bullish_terms:
+      - "buy"
+      - "long"
+      - "call"
+      - "bullish"
+      - "up"
+      # Add your group's bullish terms here
+      
+    bearish_terms:
+      - "sell"
+      - "short"
+      - "put"
+      - "bearish"
+      - "down"
+      # Add your group's bearish terms here
+      
+    # Custom ticker mappings (group-specific abbreviations)
+    ticker_mappings:
+      # "group_term": "TICKER"
+      # Example: "ספיי": "SPY"
+      
+  # Member tracking (optional - for weighting signals)
+  trusted_members:
+    # List anonymized IDs of high-performing members
+    # These will be auto-generated after analysis
+    high_accuracy: []
+    moderate_accuracy: []
+    
+  # Export settings
+  export:
+    format: "txt"  # WhatsApp export format
+    encoding: "utf-8"
+    date_format: "%m/%d/%y"  # Adjust based on your locale
+    time_format: "%H:%M:%S"
+    
+  # Hypothesis generation
+  hypothesis:
+    min_mentions_for_ticker: 3  # Minimum mentions to consider a ticker
+    sentiment_threshold: 0.3  # Minimum sentiment for signal
+    consensus_threshold: 0.7  # Minimum agreement for group consensus

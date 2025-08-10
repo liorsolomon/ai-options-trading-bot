@@ -1,5 +1,7 @@
 # WhatsApp Group Integration Strategy
 
+> **Privacy Note**: This integration is designed to work with any investment/trading WhatsApp group while maintaining complete privacy. No group names or member details are stored in the code.
+
 ## 📱 The Challenge
 
 WhatsApp Web requires QR code authentication that expires, making it incompatible with automated GitHub Actions containers.
@@ -95,7 +97,7 @@ graph LR
 
 ## 📊 What We Can Extract
 
-From investChatIL messages:
+From your WhatsApp group messages:
 
 ### 1. **Sentiment Analysis**
 ```python
@@ -135,7 +137,7 @@ From investChatIL messages:
 
 ```mermaid
 flowchart TD
-    A[Weekly Export<br/>investChatIL] --> B[Upload to Repo]
+    A[Weekly Export<br/>WhatsApp Group] --> B[Upload to Repo]
     B --> C[GitHub Actions<br/>Triggers]
     C --> D[Parse Messages]
     D --> E[Extract Signals]

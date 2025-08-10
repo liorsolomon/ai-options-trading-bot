@@ -1,0 +1,62 @@
+# WhatsApp Configuration Template
+# Copy this to whatsapp_config_private.yaml and customize
+# The private file will be ignored by git
+
+whatsapp:
+  # Group identification (for your reference only)
+  group_name: "Your Group Name"
+  group_language: "en"  # Primary language: en, he, es, ar, etc.
+  
+  # Analysis settings
+  analysis:
+    default_lookback_hours: 168  # How far back to analyze
+    min_confidence_threshold: 0.7
+    max_signals_to_display: 5
+    
+  # Privacy settings
+  privacy:
+    anonymize_senders: true  # Always recommended
+    hash_length: 8
+    store_raw_messages: false  # Only store processed signals
+    
+  # Language-specific mappings
+  custom_mappings:
+    # Add bullish terms in your group's language
+    bullish_terms:
+      - "buy"
+      - "call"
+      - "long"
+      - "bullish"
+      - "up"
+      # Add your language terms here
+      
+    # Add bearish terms in your group's language  
+    bearish_terms:
+      - "sell"
+      - "put"
+      - "short"
+      - "bearish"
+      - "down"
+      # Add your language terms here
+      
+    # Map group-specific abbreviations to tickers
+    ticker_mappings:
+      # "local_term": "TICKER"
+      # Examples:
+      # "sp": "SPY"
+      # "tech": "QQQ"
+      
+  # Export format settings (adjust for your locale)
+  export:
+    format: "txt"
+    encoding: "utf-8"
+    # Date format in WhatsApp export
+    date_format: "%m/%d/%y"  # US format
+    # date_format: "%d/%m/%y"  # EU format
+    time_format: "%H:%M:%S"
+    
+  # Signal generation thresholds
+  hypothesis:
+    min_mentions_for_ticker: 3
+    sentiment_threshold: 0.3
+    consensus_threshold: 0.7
