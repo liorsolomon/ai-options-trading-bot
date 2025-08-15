@@ -76,7 +76,9 @@ tmp/
 temp/
 
 # WhatsApp data and private config
-whatsapp_data/
+whatsapp_data/*.txt
+whatsapp_data/chat_export_*
+!whatsapp_data/signals_*.json
 whatsapp_analysis/
 config/whatsapp_config_private.yaml
 *.private.yaml

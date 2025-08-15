@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "source": "investChatIL",
+    "extracted_at": "2025-08-15T14:00:00Z",
+    "message_count": 47,
+    "period_start": "2025-08-12T13:11:38Z",
+    "period_end": "2025-08-14T14:52:44Z",
+    "extractor": "Claude-WhatsApp-MCP",
+    "version": "1.0"
+  },
+  "signals": [
+    {
+      "timestamp": "2025-08-12T13:24:14Z",
+      "ticker": "MNDY",
+      "action": "AVOID",
+      "strike": null,
+      "expiration_days": null,
+      "confidence": 0.85,
+      "sentiment": "BEARISH",
+      "urgency": "HIGH",
+      "consensus_count": 4,
+      "original_text": "וואו מה קרה למונדי Monday התרסקו ממש..MNDY",
+      "translated_text": "Wow what happened to Monday they really crashed..MNDY",
+      "supporting_messages": [
+        {
+          "timestamp": "2025-08-12T13:34:41Z",
+          "text": "ההפסד התפעולי החשבונאי היה גבוה הרבה יותר מהצפוי",
+          "translation": "The accounting operating loss was much higher than expected"
+        },
+        {
+          "timestamp": "2025-08-12T13:35:56Z",
+          "text": "לא ברור לי למה כולם מקצצים והם התעקשו להוסיף איזה 800 משרות השנה (50%)",
+          "translation": "Not clear to me why everyone is cutting and they insisted on adding about 800 positions this year (50%)"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-08-14T14:52:44Z",
+      "ticker": "UNKNOWN",
+      "action": "HOLD",
+      "strike": null,
+      "expiration_days": null,
+      "confidence": 0.80,
+      "sentiment": "BULLISH",
+      "urgency": "LOW",
+      "consensus_count": 1,
+      "original_text": "נשאר לי רק שליש, 280% רווח, לא מוכר ... האסטרטגיה המקורית היתה שזה יעלה לפחות לשמונה ואולי עשר דולר",
+      "translated_text": "I have only a third left, 280% profit, not selling ... The original strategy was for it to go up to at least eight and maybe ten dollars",
+      "supporting_messages": []
+    },
+    {
+      "timestamp": "2025-08-12T13:48:09Z",
+      "ticker": "TTD",
+      "action": "MONITOR",
+      "strike": null,
+      "expiration_days": null,
+      "confidence": 0.70,
+      "sentiment": "NEUTRAL",
+      "urgency": "MEDIUM",
+      "consensus_count": 3,
+      "original_text": "חושב ששתיהן יעלו אבל לאט יותר. חושב שזאת לא רק מכה בגלל דיווח מאכזב אלא שיערוך מכפיל מחדש",
+      "translated_text": "Think both will go up but slower. Think it's not just a hit due to disappointing report but a re-rating of the multiple",
+      "supporting_messages": [
+        {
+          "timestamp": "2025-08-12T14:10:58Z",
+          "text": "חברות שה-AI אוכל אותן משקיעות ב-RD כדי להמציא את עצמן מחדש",
+          "translation": "Companies that AI is eating are investing in R&D to reinvent themselves"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-08-14T04:34:13Z",
+      "ticker": "USDJPY",
+      "action": "WATCH",
+      "strike": null,
+      "expiration_days": null,
+      "confidence": 0.65,
+      "sentiment": "BEARISH",
+      "urgency": "MEDIUM",
+      "consensus_count": 1,
+      "original_text": "קשה לחזות לטווח קצר. אולי בעתיד הקרוב ירד לשם, אולי שביפן יעלו ריבית",
+      "translated_text": "Hard to predict short term. Maybe in the near future it will drop there, maybe Japan will raise interest rates",
+      "supporting_messages": [
+        {
+          "timestamp": "2025-08-14T04:32:07Z",
+          "text": "למי שזוכר את אוגוסט שנה שעברה. Carry trade",
+          "translation": "For those who remember last August. Carry trade"
+        }
+      ]
+    }
+  ],
+  "market_summary": {
+    "overall_sentiment": "BEARISH",
+    "sentiment_score": -0.35,
+    "top_mentioned_tickers": [
+      {"ticker": "MNDY", "count": 8, "sentiment": "BEARISH"},
+      {"ticker": "TTD", "count": 5, "sentiment": "NEUTRAL"},
+      {"ticker": "USDJPY", "count": 3, "sentiment": "BEARISH"}
+    ],
+    "key_themes": [
+      "SaaS companies facing headwinds from reduced headcount",
+      "AI disruption affecting advertising and media companies",
+      "Japan rate hike concerns and carry trade unwinding",
+      "High-multiple tech stocks experiencing valuation reset",
+      "Position management - scaling out of winners"
+    ],
+    "group_activity": {
+      "messages_per_hour": 2.8,
+      "active_members": 8,
+      "response_time_avg_minutes": 8.5
+    }
+  },
+  "high_confidence_trades": [
+    {
+      "ticker": "MNDY",
+      "action": "AVOID",
+      "strike": null,
+      "confidence": 0.85,
+      "reason": "Multiple members discussing fundamental deterioration, excessive hiring, operating loss concerns"
+    },
+    {
+      "ticker": "POSITION_MGMT",
+      "action": "SCALE_OUT",
+      "strike": null,
+      "confidence": 0.80,
+      "reason": "Member demonstrated 280% gain strategy - keeping 1/3 for further upside"
+    }
+  ],
+  "extraction_stats": {
+    "processing_time_seconds": 3.2,
+    "messages_analyzed": 47,
+    "signals_extracted": 4,
+    "high_confidence_count": 2,
+    "hebrew_messages_translated": 28
+  }
+}
