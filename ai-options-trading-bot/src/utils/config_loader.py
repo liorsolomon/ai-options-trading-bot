@@ -24,7 +24,7 @@ def load_config() -> Dict[str, Any]:
         "alpaca_secret_key": os.getenv("ALPACA_SECRET_KEY"),
         "alpaca_base_url": os.getenv("ALPACA_BASE_URL", "https://paper-api.alpaca.markets"),
         "database_url": os.getenv("DATABASE_URL"),
-        "claude_api_key": os.getenv("CLAUDE_API_KEY"),
+        "claude_api_key": os.getenv("CLAUDE_API_KEY") or os.getenv("ANTHROPIC_API_KEY"),
         "trading_mode": os.getenv("TRADING_MODE", "paper"),
         "environment": os.getenv("ENVIRONMENT", "development"),
         "log_level": os.getenv("LOG_LEVEL", "INFO"),
