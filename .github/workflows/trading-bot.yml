@@ -69,8 +69,8 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PYTHONPATH: .
         run: |
-          echo "Initializing database..."
-          python scripts/init_database.py
+          echo "Skipping database initialization for now..."
+          # python scripts/init_database.py
       
       - name: Run Trading Bot
         env:
