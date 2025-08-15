@@ -61,10 +61,16 @@ class TradingBot:
         # AI decision maker (optional)
         self.ai_enabled = os.getenv("ANTHROPIC_API_KEY") is not None or os.getenv("CLAUDE_API_KEY") is not None
         if self.ai_enabled:
-            self.decision_maker = ClaudeDecisionMaker()
-            logger.info("Claude AI decision maker enabled")
+            try:
+                self.decision_maker = ClaudeDecisionMaker()
+                logger.info("Claude AI decision maker enabled")
+            except ValueError as e:
+                logger.warning(f"Claude AI disabled: {e}")
+                self.ai_enabled = False
+                self.decision_maker = None
         else:
             logger.warning("Claude AI disabled (no API key)")
+            self.decision_maker = None
             
         # Data sources
         self.whatsapp_analyzer = WhatsAppAnalyzer()
