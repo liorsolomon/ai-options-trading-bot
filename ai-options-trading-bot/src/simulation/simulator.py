@@ -117,6 +117,28 @@ class TradingSimulator:
         
         return round(new_price, 2)
     
+    def get_simulated_price(self, symbol: str) -> float:
+        """Alias for get_market_price for compatibility"""
+        return self.get_market_price(symbol)
+    
+    def get_portfolio_value(self) -> float:
+        """Get total portfolio value (cash + positions)"""
+        positions_value = sum(p.market_value for p in self.positions.values())
+        return self.cash + positions_value
+    
+    def get_positions(self) -> Dict[str, Any]:
+        """Get current positions as dict"""
+        return {
+            symbol: {
+                "quantity": pos.quantity,
+                "entry_price": pos.entry_price,
+                "current_price": pos.current_price,
+                "pnl": pos.unrealized_pnl,
+                "value": pos.market_value
+            }
+            for symbol, pos in self.positions.items()
+        }
+    
     def get_option_price(self, underlying: str, strike: float, option_type: str, 
                         days_to_expiry: int) -> float:
         """Simple option pricing simulation"""

@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 from sqlalchemy.orm import Session, sessionmaker
 from loguru import logger
 
-from src.database.models import Base
+from database.models import Base
 
 
 class DatabaseManager:

@@ -74,3 +74,10 @@ data/
 # Temporary files
 tmp/
 temp/
+
+# WhatsApp data and private config
+whatsapp_data/
+whatsapp_analysis/
+config/whatsapp_config_private.yaml
+*.private.yaml
+*_private.yaml

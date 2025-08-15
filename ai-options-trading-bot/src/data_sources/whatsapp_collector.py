@@ -1,10 +1,12 @@
 """
 WhatsApp Group Data Collector
-Collects and analyzes messages from investChatIL group
+Collects and analyzes messages from configured WhatsApp groups
+Privacy-preserving and configurable
 """
 
 import json
 import re
+import yaml
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -32,34 +34,59 @@ class WhatsAppAnalyzer:
     """
     Analyzes WhatsApp messages for trading signals
     Designed to work with exported chat data
+    Fully configurable for any group
     """
     
-    def __init__(self):
+    def __init__(self, config_path: Optional[str] = None):
         self.data_dir = Path(__file__).parent.parent.parent / "whatsapp_data"
         self.data_dir.mkdir(exist_ok=True)
         
-        # Hebrew to English mappings for common terms
-        self.hebrew_mappings = {
-            "קול": "CALL",
-            "פוט": "PUT",
-            "מניה": "stock",
-            "אופציה": "option",
-            "קנייה": "buy",
-            "מכירה": "sell",
-            "שורט": "short",
-            "לונג": "long",
-            "עולה": "rising",
-            "יורד": "falling",
-            "חזק": "strong",
-            "חלש": "weak",
-            "מומנטום": "momentum",
-            "תמיכה": "support",
-            "התנגדות": "resistance"
-        }
+        # Load configuration
+        self.config = self._load_config(config_path)
+        
+        # Use configured mappings or defaults
+        self.custom_mappings = self.config.get("whatsapp", {}).get("custom_mappings", {})
+        self.privacy_settings = self.config.get("whatsapp", {}).get("privacy", {
+            "anonymize_senders": True,
+            "hash_length": 8,
+            "store_raw_messages": False
+        })
         
         # Ticker patterns
         self.ticker_pattern = re.compile(r'\b[A-Z]{1,5}\b')
-        self.option_pattern = re.compile(r'(CALL|PUT|קול|פוט)', re.IGNORECASE)
+        self.option_pattern = re.compile(r'(CALL|PUT)', re.IGNORECASE)
+    
+    def _load_config(self, config_path: Optional[str] = None) -> Dict:
+        """Load configuration from file or use defaults"""
+        if not config_path:
+            config_path = Path(__file__).parent.parent.parent / "config" / "whatsapp_config.yaml"
+        
+        # If config file doesn't exist, use defaults
+        if not Path(config_path).exists():
+            logger.info("No config file found, using defaults")
+            return {
+                "whatsapp": {
+                    "group_name": "Investment Group",
+                    "analysis": {
+                        "default_lookback_hours": 168,
+                        "min_confidence_threshold": 0.7
+                    },
+                    "privacy": {
+                        "anonymize_senders": True,
+                        "hash_length": 8,
+                        "store_raw_messages": False
+                    }
+                }
+            }
+        
+        try:
+            with open(config_path, 'r', encoding='utf-8') as f:
+                config = yaml.safe_load(f)
+                logger.info(f"Loaded config from {config_path}")
+                return config
+        except Exception as e:
+            logger.warning(f"Could not load config: {e}, using defaults")
+            return {"whatsapp": {}}
         
     def parse_exported_chat(self, file_path: str) -> List[GroupMessage]:
         """
@@ -123,31 +150,24 @@ class WhatsAppAnalyzer:
         excluded = ['I', 'A', 'THE', 'AND', 'OR', 'IF', 'IN', 'ON', 'AT', 'TO']
         tickers = [t for t in tickers if t not in excluded]
         
-        # Add common tickers mentioned in Hebrew
-        hebrew_tickers = {
-            "ספיי": "SPY",
-            "אפל": "AAPL",
-            "טסלה": "TSLA",
-            "אנוידיה": "NVDA",
-            "מיקרוסופט": "MSFT"
-        }
-        
-        for hebrew, english in hebrew_tickers.items():
-            if hebrew in text:
-                tickers.append(english)
+        # Add custom ticker mappings from config
+        custom_tickers = self.custom_mappings.get("ticker_mappings", {})
+        if custom_tickers:
+            for custom_term, ticker in custom_tickers.items():
+                if custom_term in text:
+                    tickers.append(ticker)
         
         return list(set(tickers))  # Remove duplicates
     
     def calculate_sentiment(self, text: str) -> float:
         """Calculate message sentiment"""
         
-        # Bullish keywords
-        bullish = ['buy', 'call', 'long', 'bullish', 'up', 'rising', 'strong', 'breakout',
-                  'קנייה', 'קול', 'לונג', 'עולה', 'חזק']
+        # Get configured terms or use defaults
+        bullish = self.custom_mappings.get("bullish_terms", 
+            ['buy', 'call', 'long', 'bullish', 'up', 'rising', 'strong', 'breakout'])
         
-        # Bearish keywords  
-        bearish = ['sell', 'put', 'short', 'bearish', 'down', 'falling', 'weak', 'breakdown',
-                  'מכירה', 'פוט', 'שורט', 'יורד', 'חלש']
+        bearish = self.custom_mappings.get("bearish_terms",
+            ['sell', 'put', 'short', 'bearish', 'down', 'falling', 'weak', 'breakdown'])
         
         text_lower = text.lower()
         

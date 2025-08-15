@@ -1,0 +1,124 @@
+# Hebrew to English mappings for investChatIL group
+# This file helps the bot understand Hebrew trading terms
+
+hebrew_mappings:
+  # Action terms
+  קול: "CALL"
+  קולים: "CALLS"
+  פוט: "PUT"
+  פוטים: "PUTS"
+  קנה: "BUY"
+  קניה: "BUY"
+  קונה: "BUYING"
+  קונים: "BUYING"
+  מכר: "SELL"
+  מכירה: "SELL"
+  מוכר: "SELLING"
+  מוכרים: "SELLING"
+  שורט: "SHORT"
+  לונג: "LONG"
+  
+  # Market terms
+  שוק: "MARKET"
+  מניה: "STOCK"
+  מניות: "STOCKS"
+  אופציה: "OPTION"
+  אופציות: "OPTIONS"
+  מדד: "INDEX"
+  נאסדק: "NASDAQ"
+  דאו: "DOW"
+  
+  # Sentiment terms
+  עולה: "BULLISH"
+  עולים: "BULLISH"
+  עליה: "UP"
+  עליות: "UP"
+  ירידה: "DOWN"
+  ירידות: "DOWN"
+  יורד: "BEARISH"
+  יורדים: "BEARISH"
+  חזק: "STRONG"
+  חלש: "WEAK"
+  פריצה: "BREAKOUT"
+  שבירה: "BREAKDOWN"
+  תמיכה: "SUPPORT"
+  התנגדות: "RESISTANCE"
+  
+  # Timing terms
+  היום: "TODAY"
+  מחר: "TOMORROW"
+  שבוע: "WEEK"
+  חודש: "MONTH"
+  עכשיו: "NOW"
+  דחוף: "URGENT"
+  
+  # Risk terms
+  סטופ: "STOP"
+  "סטופ לוס": "STOP LOSS"
+  טייק: "TAKE"
+  "טייק פרופיט": "TAKE PROFIT"
+  סיכון: "RISK"
+  
+  # Common tickers mentioned in Hebrew
+  אפל: "AAPL"
+  אמזון: "AMZN"
+  גוגל: "GOOGL"
+  מיקרוסופט: "MSFT"
+  טסלה: "TSLA"
+  אנבידיה: "NVDA"
+  ספיי: "SPY"
+  
+# Signal patterns in Hebrew
+hebrew_signals:
+  bullish_phrases:
+    - "נראה טוב"
+    - "הולך לעלות"
+    - "קונה עכשיו"
+    - "כדאי להיכנס"
+    - "נכנס לונג"
+    - "פריצה למעלה"
+    - "מומנטום חיובי"
+    - "נראה חזק"
+    
+  bearish_phrases:
+    - "נראה רע"
+    - "הולך לרדת"
+    - "מוכר עכשיו"
+    - "כדאי לצאת"
+    - "נכנס שורט"
+    - "שבירה למטה"
+    - "חולשה"
+    - "נראה חלש"
+    
+  urgent_phrases:
+    - "עכשיו"
+    - "דחוף"
+    - "מהר"
+    - "לא לפספס"
+    - "הזדמנות"
+    - "אחרון"
+    
+  confidence_phrases:
+    - "בטוח"
+    - "ברור"
+    - "וודאי"
+    - "חד משמעי"
+    - "ללא ספק"
+    
+# Common Israeli market hours context
+market_context:
+  pre_market_phrases:
+    - "פרה מרקט"
+    - "לפני הפתיחה"
+    - "טרום מסחר"
+    
+  after_hours_phrases:
+    - "אפטר"
+    - "אחרי הסגירה"
+    - "פוסט מסחר"
+    
+  earnings_phrases:
+    - "דוחות"
+    - "רווחים"
+    - "תוצאות"
+    - "דוח רבעוני"

@@ -15,7 +15,7 @@ from src.data_sources.whatsapp_collector import WhatsAppAnalyzer
 
 def main():
     print("\n" + "="*60)
-    print("📱 WHATSAPP GROUP ANALYZER - investChatIL")
+    print("📱 WHATSAPP GROUP ANALYZER")
     print("="*60)
     
     if len(sys.argv) < 2:
@@ -23,7 +23,7 @@ def main():
 Usage: python analyze_whatsapp.py <exported_chat.txt>
 
 How to export WhatsApp chat:
-1. Open WhatsApp → investChatIL group
+1. Open WhatsApp → Your investment group
 2. Click ⋮ (menu) → More → Export chat
 3. Choose "Without media"
 4. Save the .txt file
@@ -110,7 +110,7 @@ The analyzer will:
     if hypotheses:
         hyp_file = output_dir / f"hypotheses_{timestamp}.txt"
         with open(hyp_file, 'w', encoding='utf-8') as f:
-            f.write("GENERATED HYPOTHESES FROM investChatIL\n")
+            f.write("GENERATED HYPOTHESES FROM WHATSAPP GROUP\n")
             f.write("="*50 + "\n\n")
             for i, hyp in enumerate(hypotheses, 1):
                 f.write(f"{i}. {hyp}\n")
