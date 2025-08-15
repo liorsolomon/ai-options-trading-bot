@@ -6,10 +6,11 @@ Coordinates all components and executes trading logic
 import os
 import sys
 import asyncio
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv not required if env vars are already set
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
 from pathlib import Path
@@ -365,18 +366,29 @@ class TradingBot:
                     option_symbol = f"{decision['ticker']}{exp_str}{option_type}{strike:08d}"
                     
                     logger.info(f"Placing order for option symbol: {option_symbol}")
+                    
+                    # Use limit order with a reasonable price for after-hours trading
+                    # For testing, use a high limit price to ensure fill
                     result = await self.executor.place_option_order(
                         option_symbol=option_symbol,
                         side="buy",
-                        quantity=decision["quantity"]
+                        quantity=decision["quantity"],
+                        order_type="limit",
+                        limit_price=10.00,  # $10 per contract for testing
+                        time_in_force="gtc"  # Good till cancelled for after-hours
                     )
                     
-                if result.get("success", False):
+                # Check if order was placed successfully
+                if result and result.get("success"):
                     executed.append({
                         **decision,
                         "execution_time": datetime.now(),
-                        "order_id": result.get("order_id")
+                        "order_id": result.get("order_id"),
+                        "status": result.get("status", "submitted")
                     })
+                    logger.info(f"✅ Order placed successfully: {result.get('order_id')}")
+                else:
+                    logger.error(f"Failed to place order: {result.get('error', 'Unknown error')}")
                     
                     # Log to database
                     await self.db.log_trade({

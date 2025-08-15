@@ -199,6 +199,7 @@ class AlpacaOptionsClient:
             logger.info(f"Option order placed: {order.id} - {side} {quantity} {option_symbol}")
             
             return {
+                "success": True,
                 "order_id": order.id,
                 "symbol": order.symbol,
                 "quantity": order.qty,
@@ -212,7 +213,7 @@ class AlpacaOptionsClient:
             
         except Exception as e:
             logger.error(f"Error placing option order: {e}")
-            raise
+            return {"success": False, "error": str(e)}
     
     async def get_positions(self) -> List[Dict[str, Any]]:
         """Get all current positions"""
