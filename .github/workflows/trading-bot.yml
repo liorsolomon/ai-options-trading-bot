@@ -89,8 +89,12 @@ jobs:
           echo "Testing Claude API key:"
           python -c "import os; print('ANTHROPIC_API_KEY set:', bool(os.getenv('ANTHROPIC_API_KEY')))"
           python -c "import os; print('CLAUDE_API_KEY set:', bool(os.getenv('CLAUDE_API_KEY')))"
-          # Run the main script with timeout
-          timeout 120 python src/main.py || echo "Trading cycle completed"
+          echo ""
+          echo "========================================="
+          echo "EXECUTING ONE TRADE FOR TRANSACTION PROOF"
+          echo "========================================="
+          # Run the test script to execute one trade
+          python test_one_trade.py
       
       - name: Upload logs
         if: always()
