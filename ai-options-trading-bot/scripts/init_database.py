@@ -9,8 +9,18 @@ import sys
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Add parent directory to path
-sys.path.append(str(Path(__file__).parent.parent))
+# Add parent directory to path - handle both local and GitHub Actions
+script_dir = Path(__file__).parent
+project_root = script_dir.parent
+
+# Try different path configurations
+if (project_root / 'src').exists():
+    sys.path.insert(0, str(project_root))
+elif (project_root / 'ai-options-trading-bot' / 'src').exists():
+    sys.path.insert(0, str(project_root / 'ai-options-trading-bot'))
+else:
+    # Fallback - go up one more level
+    sys.path.insert(0, str(project_root.parent))
 
 load_dotenv()
 
