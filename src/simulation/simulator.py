@@ -314,6 +314,72 @@ class TradingSimulator:
             "num_orders": len(self.order_history)
         }
     
+    async def place_option_order(self, ticker: str = None, option_type: str = None, 
+                                  strike: float = None, quantity: int = None, 
+                                  side: str = None, option_symbol: str = None,
+                                  order_type: str = "MARKET", limit_price: Optional[float] = None,
+                                  time_in_force: str = "day") -> Dict[str, Any]:
+        """
+        Place an option order - compatible with both simulator and Alpaca interfaces
+        
+        Args:
+            ticker: Underlying ticker symbol (for simulator)
+            option_type: CALL or PUT (for simulator)
+            strike: Strike price (for simulator)
+            quantity: Number of contracts
+            side: buy or sell
+            option_symbol: Full option symbol (for Alpaca compatibility)
+            order_type: market or limit
+            limit_price: Limit price for limit orders
+            time_in_force: Time in force (ignored in simulator)
+            
+        Returns:
+            Dict with order result
+        """
+        try:
+            # Extract ticker from option_symbol if provided (Alpaca format)
+            if option_symbol and not ticker:
+                # Format: SPY241220C00440000 -> extract SPY
+                ticker = ''.join(c for c in option_symbol if c.isalpha())
+                
+            # Default expiration to 30 days from now
+            expiration = datetime.now() + timedelta(days=30)
+            
+            # Place the order
+            order = await self.place_order(
+                symbol=ticker,
+                quantity=quantity,
+                side=side.upper(),
+                order_type=order_type.upper(),
+                limit_price=limit_price,
+                is_option=True,
+                strike=strike,
+                expiration=expiration,
+                option_type=option_type
+            )
+            
+            # Return result in expected format
+            return {
+                "success": order.status in ["FILLED", "PENDING"],
+                "order_id": order.id,
+                "status": order.status.lower(),
+                "symbol": ticker,
+                "quantity": quantity,
+                "side": side,
+                "order_type": order_type,
+                "filled_price": order.filled_price,
+                "message": f"Order {order.status.lower()}: {side} {quantity} {ticker} {option_type} @ ${strike}"
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to place option order: {e}")
+            return {
+                "success": False,
+                "error": str(e),
+                "order_id": None,
+                "status": "failed"
+            }
+    
     def reset(self):
         """Reset simulator to initial state"""
         self.cash = self.initial_cash
