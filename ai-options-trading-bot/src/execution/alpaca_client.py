@@ -54,7 +54,23 @@ class AlpacaOptionsClient:
         self.stock_data_client = StockHistoricalDataClient(api_key, secret_key)
         self.option_data_client = OptionHistoricalDataClient(api_key, secret_key)
         
+        self.connected = False
         logger.info(f"Alpaca client initialized in {os.getenv('TRADING_MODE', 'paper')} mode")
+    
+    async def connect(self) -> bool:
+        """Connect to Alpaca API and verify credentials"""
+        try:
+            # Test connection by getting account info
+            account = self.trading_client.get_account()
+            if account:
+                self.connected = True
+                logger.info(f"Connected to Alpaca - Account: {account.account_number}")
+                logger.info(f"Buying Power: ${account.buying_power}")
+                return True
+            return False
+        except Exception as e:
+            logger.error(f"Failed to connect to Alpaca: {e}")
+            return False
     
     async def get_account_info(self) -> Dict[str, Any]:
         """Get account information including buying power and positions"""
