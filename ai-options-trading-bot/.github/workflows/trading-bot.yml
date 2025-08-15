@@ -65,15 +65,16 @@ jobs:
           mkdir -p monitoring_data
       
       - name: Initialize Database
+        working-directory: ai-options-trading-bot
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PYTHONPATH: .
         run: |
           echo "Initializing database..."
-          cd ai-options-trading-bot
-          export PYTHONPATH="$(pwd):$PYTHONPATH"
           python scripts/init_database.py
       
       - name: Run Trading Bot
+        working-directory: ai-options-trading-bot
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
@@ -83,9 +84,8 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           GITHUB_ACTIONS: true
           TRADING_MODE: ${{ github.event.inputs.mode || 'simulation' }}
+          PYTHONPATH: .
         run: |
-          cd ai-options-trading-bot
-          export PYTHONPATH="$(pwd):$PYTHONPATH"
           # Run the main script
           python src/main.py || echo "Trading cycle completed"
       
