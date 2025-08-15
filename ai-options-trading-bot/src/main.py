@@ -375,7 +375,7 @@ class TradingBot:
                         quantity=decision["quantity"],
                         order_type="limit",
                         limit_price=10.00,  # $10 per contract for testing
-                        time_in_force="gtc"  # Good till cancelled for after-hours
+                        time_in_force="day"  # Day order for options
                     )
                     
                 # Check if order was placed successfully
