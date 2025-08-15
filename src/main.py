@@ -364,7 +364,6 @@ class TradingBot:
                 else:
                     # Real execution via Alpaca
                     # Format: SPY241220C00440000 (ticker + YYMMDD + C/P + strike*1000)
-                    from datetime import datetime, timedelta
                     exp_date = datetime.now() + timedelta(days=decision.get("expiration", 7))
                     exp_str = exp_date.strftime("%y%m%d")
                     option_type = "C" if decision["option_type"] == "CALL" else "P"
