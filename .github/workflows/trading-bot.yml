@@ -89,23 +89,8 @@ jobs:
           echo "Testing Claude API key:"
           python -c "import os; print('ANTHROPIC_API_KEY set:', bool(os.getenv('ANTHROPIC_API_KEY')))"
           python -c "import os; print('CLAUDE_API_KEY set:', bool(os.getenv('CLAUDE_API_KEY')))"
-          # Run just one cycle for testing
-          timeout 120 python -c "
-import asyncio
-import sys
-sys.path.insert(0, '.')
-from src.main import TradingBot
-
-async def run_once():
-    bot = TradingBot(mode='simulation')
-    if await bot.initialize():
-        await bot.run_cycle()
-        print('✅ WORKFLOW SUCCESS: Trade cycle completed successfully!')
-    else:
-        print('❌ WORKFLOW FAILED: Could not initialize bot')
-        
-asyncio.run(run_once())
-" || echo "Trading test completed"
+          # Run the main script with timeout
+          timeout 120 python src/main.py || echo "Trading cycle completed"
       
       - name: Upload logs
         if: always()
