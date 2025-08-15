@@ -67,10 +67,11 @@ jobs:
       - name: Initialize Database
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PYTHONPATH: ${{ github.workspace }}/ai-options-trading-bot
         run: |
           echo "Initializing database..."
-          python ai-options-trading-bot/scripts/init_database.py
+          cd ai-options-trading-bot
+          export PYTHONPATH="$(pwd):$PYTHONPATH"
+          python scripts/init_database.py
       
       - name: Run Trading Bot
         env:
@@ -82,10 +83,11 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           GITHUB_ACTIONS: true
           TRADING_MODE: ${{ github.event.inputs.mode || 'simulation' }}
-          PYTHONPATH: ${{ github.workspace }}/ai-options-trading-bot
         run: |
+          cd ai-options-trading-bot
+          export PYTHONPATH="$(pwd):$PYTHONPATH"
           # Run the main script
-          python ai-options-trading-bot/src/main.py || echo "Trading cycle completed"
+          python src/main.py || echo "Trading cycle completed"
       
       - name: Upload logs
         if: always()
