@@ -152,9 +152,10 @@ class WhatsAppAnalyzer:
         
         # Add custom ticker mappings from config
         custom_tickers = self.custom_mappings.get("ticker_mappings", {})
-        for custom_term, ticker in custom_tickers.items():
-            if custom_term in text:
-                tickers.append(ticker)
+        if custom_tickers:
+            for custom_term, ticker in custom_tickers.items():
+                if custom_term in text:
+                    tickers.append(ticker)
         
         return list(set(tickers))  # Remove duplicates
     
