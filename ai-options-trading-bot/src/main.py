@@ -356,7 +356,15 @@ class TradingBot:
                     )
                 else:
                     # Real execution via Alpaca
-                    option_symbol = f"{decision['ticker']}_{decision['option_type']}_{decision['strike']}"
+                    # Format: SPY241220C00440000 (ticker + YYMMDD + C/P + strike*1000)
+                    from datetime import datetime, timedelta
+                    exp_date = datetime.now() + timedelta(days=decision.get("expiration", 7))
+                    exp_str = exp_date.strftime("%y%m%d")
+                    option_type = "C" if decision["option_type"] == "CALL" else "P"
+                    strike = int(decision["strike"] * 1000)
+                    option_symbol = f"{decision['ticker']}{exp_str}{option_type}{strike:08d}"
+                    
+                    logger.info(f"Placing order for option symbol: {option_symbol}")
                     result = await self.executor.place_option_order(
                         option_symbol=option_symbol,
                         side="buy",
