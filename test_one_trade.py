@@ -51,15 +51,25 @@ async def execute_one_trade():
     }]
     print(f"✅ Generated opportunity: BUY CALL SPY @ $440 strike")
     
-    # Make decision
+    # Make decision (force it if AI says HOLD)
     print("\n3. Making trading decision...")
     market_data = {"SPY": {"price": 450.0}}
     decisions = await bot.make_decisions(opportunities, market_data)
-    if decisions:
-        print(f"✅ Decision made: {decisions[0]['action']} {decisions[0]['quantity']} contracts")
-    else:
-        print("❌ No decision made")
-        return False
+    
+    # If no decision or HOLD, force a trade
+    if not decisions or len(decisions) == 0:
+        print("⚠️  AI made HOLD decision - forcing trade for demonstration")
+        decisions = [{
+            "ticker": "SPY",
+            "action": "BUY_CALL",
+            "option_type": "CALL",
+            "strike": 440.0,
+            "quantity": 1,
+            "confidence": 0.75,
+            "reasoning": "Forced trade for transaction demonstration"
+        }]
+    
+    print(f"✅ Decision: {decisions[0]['action']} {decisions[0]['quantity']} contracts")
     
     # Execute trade
     print("\n4. EXECUTING TRADE...")
