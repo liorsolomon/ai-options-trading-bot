@@ -90,6 +90,34 @@ class AlpacaOptionsClient:
             logger.error(f"Error getting account info: {e}")
             raise
     
+    # Alias for compatibility
+    async def get_account(self) -> Dict[str, Any]:
+        """Alias for get_account_info for compatibility"""
+        return await self.get_account_info()
+    
+    async def get_latest_quote(self, symbol: str) -> Dict[str, Any]:
+        """Get latest stock quote for a symbol"""
+        try:
+            from alpaca.data.requests import StockLatestQuoteRequest
+            
+            request = StockLatestQuoteRequest(symbol_or_symbols=symbol)
+            quotes = self.stock_data_client.get_stock_latest_quote(request)
+            
+            if symbol in quotes:
+                quote = quotes[symbol]
+                return {
+                    "symbol": symbol,
+                    "bid": float(quote.bid_price) if quote.bid_price else None,
+                    "ask": float(quote.ask_price) if quote.ask_price else None,
+                    "bid_size": quote.bid_size,
+                    "ask_size": quote.ask_size,
+                    "timestamp": quote.timestamp.isoformat() if quote.timestamp else None
+                }
+            return {}
+        except Exception as e:
+            logger.error(f"Error getting quote for {symbol}: {e}")
+            return {}
+    
     async def get_option_chain(self, symbol: str, expiration_date: Optional[datetime] = None) -> List[Dict]:
         """Get option chain for a symbol"""
         try:
