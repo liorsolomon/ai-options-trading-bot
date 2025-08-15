@@ -59,7 +59,7 @@ class TradingBot:
         self.strategy_engine = OptionsStrategyEngine()
         
         # AI decision maker (optional)
-        self.ai_enabled = os.getenv("ANTHROPIC_API_KEY") is not None
+        self.ai_enabled = os.getenv("ANTHROPIC_API_KEY") is not None or os.getenv("CLAUDE_API_KEY") is not None
         if self.ai_enabled:
             self.decision_maker = ClaudeDecisionMaker()
             logger.info("Claude AI decision maker enabled")

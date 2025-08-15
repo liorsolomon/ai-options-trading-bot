@@ -49,9 +49,9 @@ class ClaudeDecisionMaker:
     """Claude AI-powered trading decision maker"""
     
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY")
+        self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
         if not self.api_key:
-            raise ValueError("ANTHROPIC_API_KEY not found")
+            raise ValueError("ANTHROPIC_API_KEY or CLAUDE_API_KEY not found")
             
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = "claude-3-opus-20240229"  # Using Claude 3 Opus for best performance
