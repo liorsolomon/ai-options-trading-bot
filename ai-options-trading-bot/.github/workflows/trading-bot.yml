@@ -65,7 +65,6 @@ jobs:
           mkdir -p monitoring_data
       
       - name: Initialize Database
-        working-directory: ai-options-trading-bot
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PYTHONPATH: .
@@ -74,7 +73,6 @@ jobs:
           python scripts/init_database.py
       
       - name: Run Trading Bot
-        working-directory: ai-options-trading-bot
         env:
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
