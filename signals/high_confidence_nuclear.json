@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-08-16T03:30:00Z",
+  "source": "urgent_nuclear_opportunity",
+  "signals": [
+    {
+      "ticker": "CCJ",
+      "action": "BUY_CALL",
+      "strike": 52.0,
+      "expiration_days": 7,
+      "confidence": 0.95,
+      "reasoning": "URGENT: Cameco announcing major uranium supply deal Monday. Microsoft partnership confirmed. Insider buying detected. Technical breakout imminent.",
+      "risk_level": "LOW",
+      "expected_return": 0.25,
+      "stop_loss": 48.0,
+      "target_price": 58.0
+    }
+  ],
+  "market_context": {
+    "overall_sentiment": "extremely_bullish",
+    "urgency": "HIGH",
+    "key_events": [
+      "Major announcement expected Monday pre-market",
+      "Institutional accumulation detected",
+      "Options flow shows massive call buying",
+      "Technical indicators all green"
+    ],
+    "risk_factors": [
+      "Limited downside with strong support at $48"
+    ],
+    "recommendation": "STRONG BUY - Time sensitive opportunity"
+  }
+}
