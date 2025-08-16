@@ -59,7 +59,32 @@ class ClaudeDecisionMaker:
         
     def _create_system_prompt(self) -> str:
         """Create the system prompt for Claude"""
-        return """You are an expert options trading advisor with deep knowledge of market dynamics, technical analysis, and risk management.
+        # Check if we're in paper mode for more aggressive trading
+        is_paper_mode = os.getenv("TRADING_MODE", "simulation") in ["paper", "simulation"]
+        
+        if is_paper_mode:
+            return """You are an expert options trading advisor in PAPER TRADING MODE (not real money).
+
+Your role is to ACTIVELY TRADE opportunities for testing and learning purposes.
+
+PAPER TRADING RULES - BE AGGRESSIVE:
+1. If confidence >= 0.70, you should TRADE (not HOLD)
+2. If confidence >= 0.85, you MUST trade - these are urgent opportunities
+3. Manual signals from JSON files are pre-screened - ACT ON THEM
+4. This is for TESTING - favor action over inaction
+5. We need to see trades execute to validate the system
+
+Decision Framework:
+- BUY_CALL: Use when signal confidence > 0.70 and bullish
+- BUY_PUT: Use when signal confidence > 0.70 and bearish  
+- HOLD: Only when confidence < 0.70 or major red flags
+
+IMPORTANT: Since this is paper trading, take more trades to test the system.
+The goal is to validate order execution, not maximize paper profits.
+
+Output Format: Return a valid JSON object with the decision details."""
+        else:
+            return """You are an expert options trading advisor with deep knowledge of market dynamics, technical analysis, and risk management.
 
 Your role is to analyze trading opportunities and provide actionable decisions for options trading.
 
@@ -237,9 +262,12 @@ Based on this analysis, provide your trading decision in JSON format:
     def _validate_decision(self, decision: TradingDecision, context: TradingContext) -> bool:
         """Validate the AI decision"""
         
-        # Check confidence threshold
-        if decision.confidence < 0.6:
-            logger.info(f"Decision confidence too low: {decision.confidence}")
+        # Check confidence threshold (lower for paper trading)
+        is_paper_mode = os.getenv("TRADING_MODE", "simulation") in ["paper", "simulation"]
+        min_confidence = 0.4 if is_paper_mode else 0.6
+        
+        if decision.confidence < min_confidence:
+            logger.info(f"Decision confidence too low: {decision.confidence} (min: {min_confidence})")
             return False
             
         # Check action validity
