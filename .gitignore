@@ -66,6 +66,7 @@ data/
 *.csv
 *.json
 !config/*.json
+!signals/*.json
 
 # Jupyter
 .ipynb_checkpoints/

@@ -1,0 +1,47 @@
+{
+  "timestamp": "2025-08-16T03:15:00Z",
+  "source": "nuclear_energy_analysis",
+  "signals": [
+    {
+      "ticker": "CCJ",
+      "action": "BUY_CALL",
+      "strike": 50.0,
+      "expiration_days": 30,
+      "confidence": 0.80,
+      "reasoning": "Cameco - Leading uranium producer, nuclear renaissance thesis, increasing demand from data centers",
+      "risk_level": "MEDIUM"
+    },
+    {
+      "ticker": "NLR",
+      "action": "BUY_CALL", 
+      "strike": 75.0,
+      "expiration_days": 45,
+      "confidence": 0.75,
+      "reasoning": "VanEck Uranium+Nuclear ETF - Broad nuclear sector exposure, AI power demand catalyst",
+      "risk_level": "LOW"
+    },
+    {
+      "ticker": "SMR",
+      "action": "BUY_CALL",
+      "strike": 10.0,
+      "expiration_days": 60,
+      "confidence": 0.70,
+      "reasoning": "NuScale Power - Small modular reactor pure play, high growth potential",
+      "risk_level": "HIGH"
+    }
+  ],
+  "market_context": {
+    "overall_sentiment": "bullish",
+    "key_events": [
+      "Microsoft nuclear power deal for data centers",
+      "Google considering nuclear for AI operations", 
+      "Increasing global uranium prices",
+      "US government support for nuclear expansion"
+    ],
+    "risk_factors": [
+      "Regulatory approvals can be slow",
+      "High capital requirements",
+      "Public perception challenges"
+    ]
+  }
+}

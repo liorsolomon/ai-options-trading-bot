@@ -1,0 +1,61 @@
+{
+  "timestamp": "2025-08-16T09:00:00Z",
+  "source": "investment_channel_analysis",
+  "signals": [
+    {
+      "ticker": "IREN",
+      "action": "BUY_CALL",
+      "strike": 15.0,
+      "expiration_days": 30,
+      "confidence": 0.75,
+      "reasoning": "Mining + AI infrastructure pivot. Rate cuts expected.",
+      "risk_level": "MEDIUM"
+    },
+    {
+      "ticker": "RIOT",
+      "action": "BUY_CALL", 
+      "strike": 12.0,
+      "expiration_days": 45,
+      "confidence": 0.70,
+      "reasoning": "Bitcoin miner with catch-up potential to BTC prices",
+      "risk_level": "HIGH"
+    },
+    {
+      "ticker": "SPY",
+      "action": "BUY_CALL",
+      "strike": 460.0,
+      "expiration_days": 45,
+      "confidence": 0.80,
+      "reasoning": "90% probability of September rate cuts",
+      "risk_level": "LOW"
+    },
+    {
+      "ticker": "GOOGL",
+      "action": "BUY_CALL",
+      "strike": 180.0,
+      "expiration_days": 30,
+      "confidence": 0.85,
+      "reasoning": "Full-stack AI capability from hardware to products",
+      "risk_level": "LOW"
+    },
+    {
+      "ticker": "BRK.B",
+      "action": "BUY_CALL",
+      "strike": 450.0,
+      "expiration_days": 45,
+      "confidence": 0.90,
+      "reasoning": "Buffett's expertise, recent REIT purchases signal opportunity",
+      "risk_level": "LOW"
+    }
+  ],
+  "market_context": {
+    "rate_cut_probability": 0.90,
+    "expected_date": "2025-09-15",
+    "sector_rotation": "rate_sensitive",
+    "risk_factors": [
+      "Rate cuts may not materialize",
+      "Mining stocks correlation to crypto uncertain",
+      "Bitcoin halving reduces mining economics"
+    ]
+  }
+}
