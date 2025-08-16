@@ -150,11 +150,23 @@ Output Format: Return a valid JSON object with the decision details."""
         whatsapp_sentiment = self._calculate_signal_sentiment(context.whatsapp_signals)
         position_size = self._calculate_position_size(context.portfolio_state)
         
+        # Extract signal confidence
+        signal_confidence = 0.5
+        if context.whatsapp_signals:
+            signal_confidence = context.whatsapp_signals[0].get("confidence", 0.5)
+        elif context.technical_indicators:
+            signal_confidence = context.technical_indicators.get("manual_confidence", 0.5)
+            
         prompt = f"""Analyze this trading opportunity and provide a decision:
 
 TICKER: {context.ticker}
 CURRENT PRICE: ${context.current_price}
 TIMESTAMP: {context.timestamp}
+
+🚨 SIGNAL CONFIDENCE: {signal_confidence} (THIS IS THE KEY METRIC!)
+- If confidence >= 0.70, you should TRADE
+- If confidence >= 0.85, you MUST TRADE
+- Current signal has {signal_confidence} confidence
 
 MARKET CONDITIONS:
 {json.dumps(context.market_conditions, indent=2)}
@@ -189,13 +201,15 @@ Based on this analysis, provide your trading decision in JSON format:
     "strike_price": null or number,
     "expiration_days": null or number (typically 30-45),
     "quantity": number of contracts,
-    "confidence": 0.0 to 1.0,
+    "confidence": {signal_confidence} or higher (MUST be >= {signal_confidence}),
     "reasoning": "detailed explanation",
     "risk_assessment": "risk analysis",
     "expected_outcome": "what you expect to happen",
     "stop_loss": null or price level,
     "take_profit": null or price level
-}}"""
+}}
+
+REMEMBER: Since the signal confidence is {signal_confidence}, your confidence MUST be at least {signal_confidence}!"""
         
         return prompt
         

@@ -337,14 +337,20 @@ class TradingBot:
             opps_to_process = manual_opps[:5] + other_opps[:max(0, 5 - len(manual_opps))]
             
             for opp in opps_to_process:
+                # Pass the opportunity confidence and reasoning to Claude
                 context = TradingContext(
                     timestamp=datetime.now(),
                     ticker=opp["ticker"],
                     current_price=market_data.get(opp["ticker"], {}).get("price", 100),
                     market_conditions=market_data.get("conditions", {}),
-                    whatsapp_signals=[],
-                    news_sentiment={},
-                    technical_indicators={},
+                    whatsapp_signals=[{
+                        "confidence": opp.get("confidence", 0.75),
+                        "action": opp.get("action", "BUY_CALL"),
+                        "reasoning": opp.get("reason", "Manual signal"),
+                        "strategy": opp.get("strategy", "manual_analysis")
+                    }],
+                    news_sentiment={"signal_confidence": opp.get("confidence", 0.75)},
+                    technical_indicators={"manual_confidence": opp.get("confidence", 0.75)},
                     recent_performance={},
                     portfolio_state=self.portfolio_state,
                     risk_metrics={"max_loss": 0.02}
