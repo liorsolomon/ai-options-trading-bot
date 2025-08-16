@@ -100,6 +100,13 @@ jobs:
             echo "TESTING PAPER TRADING CONNECTION"
             echo "========================================="
             python test_paper_trading.py | tee -a logs/paper_test_$(date +%Y%m%d_%H%M%S).log
+            
+            # Test nuclear trades
+            echo ""
+            echo "========================================="
+            echo "EXECUTING NUCLEAR STOCK TRADES"
+            echo "========================================="
+            python test_nuclear_trade.py | tee -a logs/nuclear_test_$(date +%Y%m%d_%H%M%S).log
           fi
           
           echo ""
