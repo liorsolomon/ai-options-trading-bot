@@ -9,7 +9,9 @@ import sys
 from datetime import datetime
 
 # Force test mode
-os.environ["TRADING_MODE"] = "simulation"
+# Use environment variable if set, otherwise default to simulation
+if "TRADING_MODE" not in os.environ:
+    os.environ["TRADING_MODE"] = "simulation"
 os.environ["GITHUB_ACTIONS"] = "true"
 os.environ["FORCE_TEST_TRADE"] = "true"
 
@@ -24,8 +26,12 @@ async def execute_one_trade():
     
     from src.main import TradingBot
     
+    # Get mode from environment
+    mode = os.environ.get("TRADING_MODE", "simulation")
+    print(f"Trading Mode: {mode.upper()}")
+    
     # Create bot
-    bot = TradingBot(mode='simulation')
+    bot = TradingBot(mode=mode)
     
     # Initialize
     print("\n1. Initializing bot...")
