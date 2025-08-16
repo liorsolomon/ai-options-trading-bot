@@ -329,7 +329,14 @@ class TradingBot:
         
         # If AI is enabled, use Claude for decisions
         if self.ai_enabled:
-            for opp in opportunities[:3]:  # Limit to top 3
+            # Prioritize manual signals, then limit to 5 total
+            manual_opps = [o for o in opportunities if o.get("strategy") == "manual_analysis"]
+            other_opps = [o for o in opportunities if o.get("strategy") != "manual_analysis"]
+            
+            # Process manual signals first (up to 5), then others if room
+            opps_to_process = manual_opps[:5] + other_opps[:max(0, 5 - len(manual_opps))]
+            
+            for opp in opps_to_process:
                 context = TradingContext(
                     timestamp=datetime.now(),
                     ticker=opp["ticker"],
