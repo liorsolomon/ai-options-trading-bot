@@ -93,6 +93,16 @@ jobs:
           python -c "import os; print('ANTHROPIC_API_KEY set:', bool(os.getenv('ANTHROPIC_API_KEY')))"
           python -c "import os; print('CLAUDE_API_KEY set:', bool(os.getenv('CLAUDE_API_KEY')))"
           echo ""
+          
+          # Test paper trading if in paper mode
+          if [ "$TRADING_MODE" = "paper" ]; then
+            echo "========================================="
+            echo "TESTING PAPER TRADING CONNECTION"
+            echo "========================================="
+            python test_paper_trading.py | tee -a logs/paper_test_$(date +%Y%m%d_%H%M%S).log
+          fi
+          
+          echo ""
           echo "========================================="
           echo "EXECUTING ONE TRADE FOR TRANSACTION PROOF"
           echo "========================================="
