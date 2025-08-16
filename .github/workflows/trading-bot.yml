@@ -56,7 +56,7 @@ jobs:
       - name: Initialize Environment
         env:
           GITHUB_ACTIONS: true
-          TRADING_MODE: ${{ github.event.inputs.mode || 'simulation' }}
+          TRADING_MODE: ${{ github.event.inputs.mode || 'paper' }}
         run: |
           echo "Running in $TRADING_MODE mode"
           # Create necessary directories
@@ -85,7 +85,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           GITHUB_ACTIONS: true
-          TRADING_MODE: ${{ github.event.inputs.mode || 'simulation' }}
+          TRADING_MODE: ${{ github.event.inputs.mode || 'paper' }}
           PYTHONPATH: .
         run: |
           echo "Current directory: $(pwd)"
