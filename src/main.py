@@ -163,8 +163,23 @@ class TradingBot:
         signals = {
             "whatsapp": [],
             "news": [],
-            "technical": []
+            "technical": [],
+            "manual": []
         }
+        
+        # Check for manual analysis JSON files
+        signals_dir = Path(__file__).parent.parent / "signals"
+        if signals_dir.exists():
+            for json_file in signals_dir.glob("*.json"):
+                try:
+                    import json
+                    with open(json_file, 'r') as f:
+                        data = json.load(f)
+                        for signal in data.get("signals", []):
+                            signals["manual"].append(signal)
+                            logger.info(f"Loaded manual signal: {signal['ticker']} {signal['action']}")
+                except Exception as e:
+                    logger.error(f"Failed to load signal file {json_file}: {e}")
         
         # Check for WhatsApp export
         whatsapp_dir = Path(__file__).parent.parent / "whatsapp_data"
@@ -179,7 +194,7 @@ class TradingBot:
                 for signal in summary.get("signals", []):
                     signals["whatsapp"].append(signal)
                     
-        logger.info(f"Collected signals: WhatsApp={len(signals['whatsapp'])}")
+        logger.info(f"Collected signals: WhatsApp={len(signals['whatsapp'])}, Manual={len(signals['manual'])}")
         return signals
         
     def _find_latest_export(self, directory: Path) -> Optional[Path]:
@@ -238,8 +253,22 @@ class TradingBot:
         
         opportunities = []
         
+        # Process manual signals first (highest priority)
+        for signal in signals.get("manual", []):
+            opportunities.append({
+                "ticker": signal["ticker"],
+                "action": signal["action"],
+                "option_type": "CALL" if "CALL" in signal["action"] else "PUT",
+                "strike": signal.get("strike", 0),
+                "expiration": signal.get("expiration_days", 30),
+                "confidence": signal.get("confidence", 0.75),
+                "strategy": "manual_analysis",
+                "reason": signal.get("reasoning", "Manual trading signal")
+            })
+            logger.info(f"Added manual opportunity: {signal['ticker']} {signal['action']}")
+        
         # TEST MODE: Force a test trade if no signals
-        if os.getenv("FORCE_TEST_TRADE") == "true" or (not any(signals.values()) and os.getenv("GITHUB_ACTIONS") == "true"):
+        if os.getenv("FORCE_TEST_TRADE") == "true" or (not any(signals.values()) and not opportunities and os.getenv("GITHUB_ACTIONS") == "true"):
             logger.info("TEST MODE: Generating test opportunity for SPY")
             opportunities.append({
                 "ticker": "SPY",
