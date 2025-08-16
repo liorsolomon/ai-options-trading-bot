@@ -43,19 +43,29 @@ async def execute_one_trade():
     print(f"✅ Bot initialized")
     print(f"📊 Claude AI Status: {'ENABLED' if bot.ai_enabled else 'DISABLED'}")
     
-    # Generate test opportunity
+    # Generate test opportunity with realistic strike
     print("\n2. Generating test trade opportunity...")
+    
+    # Use more realistic strike near current SPY price (~550-560 range)
+    # And use monthly expiration (3rd Friday)
+    from datetime import timedelta
+    next_friday = datetime.now()
+    days_ahead = 4 - next_friday.weekday()  # Friday is weekday 4
+    if days_ahead <= 0:  # Target already happened this week
+        days_ahead += 7
+    next_friday = next_friday + timedelta(days=days_ahead + 14)  # 2-3 weeks out
+    
     opportunities = [{
         "ticker": "SPY",
         "action": "BUY_CALL",
         "option_type": "CALL",
-        "strike": 440.0,
-        "expiration": 7,
+        "strike": 560.0,  # More realistic strike for current SPY levels
+        "expiration": (next_friday - datetime.now()).days,
         "confidence": 0.85,
         "strategy": "test_strategy",
         "reason": "Demonstration trade for transaction proof"
     }]
-    print(f"✅ Generated opportunity: BUY CALL SPY @ $440 strike")
+    print(f"✅ Generated opportunity: BUY CALL SPY @ $560 strike, exp in {opportunities[0]['expiration']} days")
     
     # Make decision (force it if AI says HOLD)
     print("\n3. Making trading decision...")
@@ -69,8 +79,9 @@ async def execute_one_trade():
             "ticker": "SPY",
             "action": "BUY_CALL",
             "option_type": "CALL",
-            "strike": 440.0,
+            "strike": 560.0,  # Match the opportunity strike
             "quantity": 1,
+            "expiration": opportunities[0]["expiration"],
             "confidence": 0.75,
             "reasoning": "Forced trade for transaction demonstration"
         }]
