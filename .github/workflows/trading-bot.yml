@@ -63,6 +63,9 @@ jobs:
           mkdir -p logs
           mkdir -p whatsapp_data
           mkdir -p monitoring_data
+          # Create initial log files
+          echo "Trading Bot Log - $(date)" > logs/trading_bot_$(date +%Y%m%d).log
+          echo "System initialized at $(date)" >> logs/trading_bot_$(date +%Y%m%d).log
       
       - name: Initialize Database
         env:
@@ -93,8 +96,17 @@ jobs:
           echo "========================================="
           echo "EXECUTING ONE TRADE FOR TRANSACTION PROOF"
           echo "========================================="
-          # Run the test script to execute one trade
-          python test_one_trade.py
+          # Run the test script to execute one trade and capture output
+          python test_one_trade.py | tee -a logs/transaction_$(date +%Y%m%d_%H%M%S).log
+          
+          # Save transaction summary
+          echo "Transaction completed at $(date)" >> logs/trading_summary.log
+          echo "Latest run details saved to logs/" >> logs/trading_summary.log
+          
+          # List log files for verification
+          echo ""
+          echo "📁 Log files created:"
+          ls -la logs/
       
       - name: Upload logs
         if: always()
