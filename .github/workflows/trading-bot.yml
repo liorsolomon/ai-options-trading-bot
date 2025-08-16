@@ -103,11 +103,23 @@ jobs:
           fi
           
           echo ""
-          echo "========================================="
-          echo "EXECUTING ONE TRADE FOR TRANSACTION PROOF"
-          echo "========================================="
-          # Run the test script to execute one trade and capture output
-          python test_one_trade.py | tee -a logs/transaction_$(date +%Y%m%d_%H%M%S).log
+          
+          # Check if we have signal files to process
+          if ls signals/*.json 1> /dev/null 2>&1; then
+            echo "========================================="
+            echo "PROCESSING TRADING SIGNALS"
+            echo "========================================="
+            echo "Found signal files:"
+            ls -la signals/*.json
+            # Run the full bot to process signals
+            python run_trading_bot.py | tee -a logs/trading_$(date +%Y%m%d_%H%M%S).log
+          else
+            echo "========================================="
+            echo "EXECUTING ONE TRADE FOR TRANSACTION PROOF"
+            echo "========================================="
+            # Run the test script to execute one trade and capture output
+            python test_one_trade.py | tee -a logs/transaction_$(date +%Y%m%d_%H%M%S).log
+          fi
           
           # Save transaction summary
           echo "Transaction completed at $(date)" >> logs/trading_summary.log
