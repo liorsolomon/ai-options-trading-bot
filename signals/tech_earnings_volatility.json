@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-08-16T04:00:00Z",
+  "source": "channel_analysis_vol_harvest",
+  "signals": [
+    {
+      "ticker": "MNDY",
+      "action": "BUY_PUT",
+      "strike": 240.0,
+      "expiration_days": 30,
+      "confidence": 0.70,
+      "reasoning": "POST-EARNINGS IV CRUSH: Monday.com IV elevated post-earnings. Selling premium via put spreads. IV rank > 60%.",
+      "risk_level": "LOW",
+      "expected_return": 0.15,
+      "stop_loss": 235.0,
+      "target_price": 250.0,
+      "strategy": "iron_condor_put_side"
+    },
+    {
+      "ticker": "TTD",
+      "action": "BUY_CALL",
+      "strike": 100.0,
+      "expiration_days": 30,
+      "confidence": 0.68,
+      "reasoning": "Trade Desk - Post-earnings setup. High IV creates premium selling opportunity. Call side of iron condor.",
+      "risk_level": "MEDIUM",
+      "expected_return": 0.12,
+      "stop_loss": 95.0,
+      "target_price": 105.0,
+      "strategy": "iron_condor_call_side"
+    },
+    {
+      "ticker": "PLTR",
+      "action": "BUY_CALL",
+      "strike": 30.0,
+      "expiration_days": 45,
+      "confidence": 0.74,
+      "reasoning": "Palantir - AI beneficiary with upcoming catalysts. Volatility expansion expected into next earnings.",
+      "risk_level": "MEDIUM",
+      "expected_return": 0.35,
+      "stop_loss": 27.0,
+      "target_price": 35.0
+    },
+    {
+      "ticker": "CRM",
+      "action": "BUY_CALL",
+      "strike": 265.0,
+      "expiration_days": 30,
+      "confidence": 0.71,
+      "reasoning": "Salesforce - AI integration story. Lower IV than peers creates favorable risk/reward.",
+      "risk_level": "LOW",
+      "expected_return": 0.18,
+      "stop_loss": 255.0,
+      "target_price": 280.0
+    }
+  ],
+  "market_context": {
+    "overall_sentiment": "neutral_bullish",
+    "key_events": [
+      "Tech earnings season winding down",
+      "IV compression phase beginning",
+      "AI narrative still strong",
+      "Sector rotation into large cap tech"
+    ],
+    "risk_factors": [
+      "Earnings disappointments",
+      "Guidance cuts",
+      "Valuation concerns"
+    ]
+  }
+}

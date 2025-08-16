@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-08-16T04:00:00Z",
+  "source": "channel_analysis_butterfly",
+  "signals": [
+    {
+      "ticker": "IREN",
+      "action": "BUY_CALL",
+      "strike": 6.0,
+      "expiration_days": 30,
+      "confidence": 0.75,
+      "reasoning": "BUTTERFLY LOWER WING: AI data center pivot creates binary outcome. Max profit at $8 strike. Entry at $6 provides good risk/reward.",
+      "risk_level": "LOW",
+      "expected_return": 0.50,
+      "stop_loss": 5.5,
+      "target_price": 8.0,
+      "strategy": "butterfly_long_wing"
+    },
+    {
+      "ticker": "SMCI",
+      "action": "BUY_CALL",
+      "strike": 500.0,
+      "expiration_days": 30,
+      "confidence": 0.72,
+      "reasoning": "Super Micro Computer - Pure AI infrastructure play. High volatility creates butterfly opportunities.",
+      "risk_level": "HIGH",
+      "expected_return": 0.40,
+      "stop_loss": 450.0,
+      "target_price": 550.0
+    },
+    {
+      "ticker": "DLR",
+      "action": "BUY_CALL",
+      "strike": 145.0,
+      "expiration_days": 45,
+      "confidence": 0.77,
+      "reasoning": "Digital Realty Trust - Data center REIT benefiting from AI boom. Lower volatility than pure tech plays.",
+      "risk_level": "MEDIUM",
+      "expected_return": 0.20,
+      "stop_loss": 140.0,
+      "target_price": 155.0
+    }
+  ],
+  "market_context": {
+    "overall_sentiment": "bullish",
+    "key_events": [
+      "IREN AI pivot announcement expected",
+      "Data center demand exceeding supply",
+      "Power infrastructure investments accelerating",
+      "NVDA earnings showing continued AI growth"
+    ],
+    "risk_factors": [
+      "AI bubble concerns",
+      "Power grid constraints",
+      "Competition from hyperscalers"
+    ]
+  }
+}

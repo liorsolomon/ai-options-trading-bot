@@ -1,0 +1,85 @@
+{
+  "timestamp": "2025-08-16T04:00:00Z",
+  "source": "channel_analysis_income",
+  "signals": [
+    {
+      "ticker": "GOOGL",
+      "action": "BUY_PUT",
+      "strike": 160.0,
+      "expiration_days": 30,
+      "confidence": 0.88,
+      "reasoning": "CASH-SECURED PUT: Google at support. Selling $160 puts for income. Would own at attractive valuation if assigned.",
+      "risk_level": "LOW",
+      "expected_return": 0.08,
+      "stop_loss": 155.0,
+      "target_price": 170.0,
+      "strategy": "cash_secured_put"
+    },
+    {
+      "ticker": "MSFT",
+      "action": "BUY_PUT",
+      "strike": 410.0,
+      "expiration_days": 30,
+      "confidence": 0.86,
+      "reasoning": "Microsoft cash-secured put. Premium income strategy. Happy to own at $410 with AI tailwinds.",
+      "risk_level": "LOW",
+      "expected_return": 0.07,
+      "stop_loss": 400.0,
+      "target_price": 430.0,
+      "strategy": "cash_secured_put"
+    },
+    {
+      "ticker": "SPY",
+      "action": "BUY_PUT",
+      "strike": 545.0,
+      "expiration_days": 7,
+      "confidence": 0.82,
+      "reasoning": "Weekly SPY put selling. Theta gang bread and butter. 5% OTM for safety.",
+      "risk_level": "LOW",
+      "expected_return": 0.05,
+      "stop_loss": 540.0,
+      "target_price": 560.0,
+      "strategy": "weekly_put_selling"
+    },
+    {
+      "ticker": "QQQ",
+      "action": "BUY_CALL",
+      "strike": 480.0,
+      "expiration_days": 30,
+      "confidence": 0.79,
+      "reasoning": "QQQ covered call setup. Selling calls against long position for income. 3% OTM.",
+      "risk_level": "LOW",
+      "expected_return": 0.06,
+      "stop_loss": 450.0,
+      "target_price": 480.0,
+      "strategy": "covered_call"
+    },
+    {
+      "ticker": "AAPL",
+      "action": "BUY_PUT",
+      "strike": 220.0,
+      "expiration_days": 45,
+      "confidence": 0.84,
+      "reasoning": "Apple put selling into iPhone 16 launch. Premium collection with fundamental support.",
+      "risk_level": "LOW",
+      "expected_return": 0.09,
+      "stop_loss": 215.0,
+      "target_price": 235.0,
+      "strategy": "cash_secured_put"
+    }
+  ],
+  "market_context": {
+    "overall_sentiment": "neutral_bullish",
+    "key_events": [
+      "Elevated option premiums",
+      "VIX creating income opportunities",
+      "Quality stocks at reasonable valuations",
+      "Consistent premium selling environment"
+    ],
+    "risk_factors": [
+      "Market correction",
+      "Assignment risk",
+      "Volatility spike"
+    ]
+  }
+}
