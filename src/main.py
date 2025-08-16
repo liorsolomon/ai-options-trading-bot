@@ -392,12 +392,16 @@ class TradingBot:
                     )
                 else:
                     # Real execution via Alpaca
-                    # Format: SPY241220C00440000 (ticker + YYMMDD + C/P + strike*1000)
-                    exp_date = datetime.now() + timedelta(days=decision.get("expiration", 7))
-                    exp_str = exp_date.strftime("%y%m%d")
-                    option_type = "C" if decision["option_type"] == "CALL" else "P"
-                    strike = int(decision["strike"] * 1000)
-                    option_symbol = f"{decision['ticker']}{exp_str}{option_type}{strike:08d}"
+                    # Check if pre-formatted symbol is provided
+                    if "option_symbol" in decision and decision["option_symbol"]:
+                        option_symbol = decision["option_symbol"]
+                    else:
+                        # Format: SPY241220C00440000 (ticker + YYMMDD + C/P + strike*1000)
+                        exp_date = datetime.now() + timedelta(days=decision.get("expiration", 7))
+                        exp_str = exp_date.strftime("%y%m%d")
+                        option_type = "C" if decision["option_type"] == "CALL" else "P"
+                        strike = int(decision["strike"] * 1000)
+                        option_symbol = f"{decision['ticker']}{exp_str}{option_type}{strike:08d}"
                     
                     logger.info(f"Placing order for option symbol: {option_symbol}")
                     
@@ -424,14 +428,17 @@ class TradingBot:
                 else:
                     logger.error(f"Failed to place order: {result.get('error', 'Unknown error')}")
                     
-                    # Log to database
-                    await self.db.log_trade({
-                        "ticker": decision["ticker"],
-                        "action": decision["action"],
-                        "quantity": decision["quantity"],
-                        "confidence": decision["confidence"],
-                        "execution_time": datetime.now()
-                    })
+                    # Log to database (skip if error to avoid secondary failures)
+                    try:
+                        await self.db.log_trade({
+                            "symbol": decision["ticker"],  # Changed from 'ticker' to 'symbol'
+                            "action": decision["action"],
+                            "quantity": decision["quantity"],
+                            "confidence": decision["confidence"],
+                            "execution_time": datetime.now()
+                        })
+                    except Exception as db_error:
+                        logger.warning(f"Failed to log trade to database: {db_error}")
                     
             except Exception as e:
                 logger.error(f"Failed to execute trade: {e}")

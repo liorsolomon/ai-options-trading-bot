@@ -46,26 +46,25 @@ async def execute_one_trade():
     # Generate test opportunity with realistic strike
     print("\n2. Generating test trade opportunity...")
     
-    # Use more realistic strike near current SPY price (~550-560 range)
-    # And use monthly expiration (3rd Friday)
-    from datetime import timedelta
-    next_friday = datetime.now()
-    days_ahead = 4 - next_friday.weekday()  # Friday is weekday 4
-    if days_ahead <= 0:  # Target already happened this week
-        days_ahead += 7
-    next_friday = next_friday + timedelta(days=days_ahead + 14)  # 2-3 weeks out
+    # Import option finder for better option selection
+    from src.utils.option_finder import OptionFinder
+    
+    # Get a safe test option that's likely to be available
+    test_option = OptionFinder.get_safe_test_option()
     
     opportunities = [{
-        "ticker": "SPY",
+        "ticker": test_option["ticker"],
         "action": "BUY_CALL",
-        "option_type": "CALL",
-        "strike": 560.0,  # More realistic strike for current SPY levels
-        "expiration": (next_friday - datetime.now()).days,
+        "option_type": test_option["type"],
+        "strike": test_option["strike"],
+        "expiration": test_option["days_to_expiry"],
         "confidence": 0.85,
         "strategy": "test_strategy",
-        "reason": "Demonstration trade for transaction proof"
+        "reason": "Demonstration trade for transaction proof",
+        "option_symbol": test_option["symbol"]  # Pre-formatted symbol
     }]
-    print(f"✅ Generated opportunity: BUY CALL SPY @ $560 strike, exp in {opportunities[0]['expiration']} days")
+    print(f"✅ Generated opportunity: {test_option['description']}")
+    print(f"   Option Symbol: {test_option['symbol']}")
     
     # Make decision (force it if AI says HOLD)
     print("\n3. Making trading decision...")
@@ -76,14 +75,15 @@ async def execute_one_trade():
     if not decisions or len(decisions) == 0:
         print("⚠️  AI made HOLD decision - forcing trade for demonstration")
         decisions = [{
-            "ticker": "SPY",
-            "action": "BUY_CALL",
-            "option_type": "CALL",
-            "strike": 560.0,  # Match the opportunity strike
+            "ticker": opportunities[0]["ticker"],
+            "action": opportunities[0]["action"],
+            "option_type": opportunities[0]["option_type"],
+            "strike": opportunities[0]["strike"],
             "quantity": 1,
             "expiration": opportunities[0]["expiration"],
             "confidence": 0.75,
-            "reasoning": "Forced trade for transaction demonstration"
+            "reasoning": "Forced trade for transaction demonstration",
+            "option_symbol": opportunities[0].get("option_symbol")
         }]
     
     print(f"✅ Decision: {decisions[0]['action']} {decisions[0]['quantity']} contracts")
